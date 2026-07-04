@@ -6,4 +6,4 @@ def celsius_to_fahreinheit(temp: int | float) -> float:
     return round(temp, 2)
 
 
-celsius_to_fahreinheit(30.5)
+celsius_to_fahreinheit(30)
