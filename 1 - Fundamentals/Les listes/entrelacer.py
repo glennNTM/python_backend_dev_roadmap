@@ -1,6 +1,8 @@
 
 def entrelacer(liste_a, liste_b):
-    liste_ab = list(zip(liste_a, liste_b))
+    liste_ab = []
+    for i in list(zip(liste_a, liste_b)):
+        liste_ab.extend(list(i))
     if len(liste_a) > len(liste_b):
         n = len(liste_b)
         liste_ab.extend(liste_a[n:])
@@ -12,4 +14,4 @@ def entrelacer(liste_a, liste_b):
 
 print(entrelacer([1, 2, 3, 4], ["a", "b", "c"]))
 
-# [(1, 'a'), (2, 'b'), (3, 'c'), 2, 3, 4]
+# [1, 'a', 2, 'b', 3, 'c', 4]
