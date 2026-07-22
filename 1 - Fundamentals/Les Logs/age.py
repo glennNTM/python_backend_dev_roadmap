@@ -14,3 +14,5 @@ def verifier_age(age: int) -> int | None:
     
 
 verifier_age(10)
+verifier_age(1540)
+verifier_age(-10)
