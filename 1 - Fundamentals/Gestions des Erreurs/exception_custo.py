@@ -1,4 +1,6 @@
+import logging
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s', filemode="a", filename="app.log")
 
 class SoldeInssufisantError(Exception):
     """Raise when sold is not enough to do the transaction"""
@@ -19,13 +21,18 @@ def retirer(solde: float, montant: float) -> float | None:
         if solde < montant:
             raise SoldeInssufisantError(f"Votre solde {solde} est insuffisant.")
     except ValueError as e:
-        print(e)
+        logging.error(e)
+        return None
 
     except SoldeInssufisantError as e:
-        print (e)
+        logging.warning(e)
+        return None
     else:
+        logging.info(f"Montant retire: {montant} / Nouveau solde: {solde - montant}")
         return solde - montant 
     finally:
-        print("Tentative de transaction finie")
+        logging.info("Tentative de transaction finie")
     
 print(retirer(1000.0, -25000.0))
+print(retirer(100.0, 25000.0))
+print(retirer(100000.0, 25000.0))
