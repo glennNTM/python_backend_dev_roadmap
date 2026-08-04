@@ -28,12 +28,9 @@ dirs = {
     ".apk" : "Programmes"
  }
 
-SOURCE_FILE = Path(__file__).resolve()  # resolve permet de résoudre les liens symboliques
 dir_a_trier = Path.home() / "Documents"
 
-
 files = [f for f in dir_a_trier.iterdir() if f.is_file()]
-print(SOURCE_FILE)
 
 for f in files:
     output_dir = dir_a_trier / dirs.get(f.suffix,"Autres")
