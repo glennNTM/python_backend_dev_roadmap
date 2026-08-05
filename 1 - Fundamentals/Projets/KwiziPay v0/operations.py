@@ -1,11 +1,13 @@
 def deposer():
-    pass
+    print("Vous voulez faire un depot")
+
 
 def retirer():
-    pass
+    print("Vous voulez faire un retrait")
+
 
 def transferer():
-    pass
+    print("Vous voulez faire un transfert")
 
 def historique():
-    pass
+    print("Vous voulez consulter votre historique")
