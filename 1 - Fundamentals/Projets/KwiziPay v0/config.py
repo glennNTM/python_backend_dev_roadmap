@@ -1,7 +1,8 @@
 import logging
 from pathlib import Path
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
+def setup_logging():
+    logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
 
 
 BASE_DIR = Path(__file__).resolve().parent
