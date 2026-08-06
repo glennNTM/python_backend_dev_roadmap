@@ -5,9 +5,6 @@ import json, logging
 
 logger = logging.getLogger(__name__)  
 
-def charger_les_donnees():
-    logger.error("Fichier JSON corrompu")
-
 def deposer():
     print("Vous voulez faire un depot")
 
@@ -24,6 +21,18 @@ def transferer():
 def historique():
     print("Vous voulez consulter votre historique")
 
-def creer_un_compte(compte_nom: str):
-    compte_nom = input("Entrz le nom du compte que vous-voulez creer: ")
-    json.load(DATA_FILE)
+def creer_un_compte(comptes: dict, nom: str, solde: float):
+    pass
+
+
+def charger_les_donnees() -> dict:
+    try:
+        with open(DATA_FILE, "r", encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+    except json.JSONDecodeError:
+        logger.error("Fichier JSON corrompu")
+        return {}
+
+
