@@ -1,4 +1,5 @@
 from config import setup_logging, DATA_FILE
+from exceptions import CompteInexistantError
 
 import json, logging
 
@@ -8,9 +9,14 @@ logger = logging.getLogger(__name__)
 def deposer():
     print("Vous voulez faire un depot")
 
-def consulter_solde():
-    print("Vous-voulez consulter un solde")
-    
+def consulter_solde(comptes: dict, nom: str):
+    if not nom in comptes:
+    # On verifie si le comte est bien existant
+        raise CompteInexistantError("Ce compte n'existe pas.")
+    else:
+        return comptes[nom]
+
+
 def retirer():
     print("Vous voulez faire un retrait")
 
@@ -36,3 +42,7 @@ def charger_les_donnees() -> dict:
         return {}
 
 
+def sauvegarder(comptes: dict):
+    with open(DATA_FILE, "w", encoding='utf-8') as f:
+        json.dump(comptes, f, indent=2)
+   

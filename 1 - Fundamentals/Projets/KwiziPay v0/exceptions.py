@@ -1,14 +1,11 @@
-class KwiwiPayError(Exception):
+class KwiziPayError(Exception):
     """Gestion des erreurs de KwiziPay"""
 
-class CompteInexistantError(KwiwiPayError):
+class CompteInexistantError(KwiziPayError):
+    """"Compte inexistant"""
+
+class SoldeInsuffisantError(KwiziPayError):
     pass
 
-class SoldeInsuffisantError(KwiwiPayError):
+class MontantInvalideError(KwiziPayError):
     pass
-
-class MontantInvalideError(KwiwiPayError):
-    pass
-
-
-
