@@ -1,27 +1,36 @@
-from operations import deposer, retirer, transferer, historique
+from operations import deposer, retirer, transferer, historique, creer_un_compte, consulter_solde
 
-options_dispo = range(1, 5)
+menu = """
+
+    [1]: Créer un compte.
+    [2]: Consulter un solde.
+    [3]: Dépôt.
+    [4]: Retrait.
+    [5]: Transfert.
+    [6]: Historique.
+    [7]: Quitter.
+
+    """
+
+print("Bienvenue dans KwiziPay, vote gestionnaire de portefeuille Mobile Money (CLI). Quelle operation voulez-vous faire? : ")
+
 while True:
-
-    choix = int(input("""
-
-    Bienvenue dans KwiziPay, vote gestionnaire de portefeuille Mobile Money (CLI). Quelle operation voulez-vous faire? : 
-
-    [1] : Depot
-    [2]: Retrait
-    [3]: Historique
-    [4]: Transfert
-
-    """))
-    while choix in [1, 2, 3, 4]:
+    choix = int(input(menu))
+    if choix in [1, 2, 3, 4, 5, 6, 7]:
         match choix:
             case 1:
-                deposer()
+                creer_un_compte()
             case 2:
-                retirer      
+                consulter_solde()
             case 3:
-                historique()
+                deposer()
             case 4:
+                retirer()
+            case 5:
                 transferer()
-    else: 
-        pass
+            case 6:
+                historique()
+            case 7:
+                print("Bye")
+                break
+        
