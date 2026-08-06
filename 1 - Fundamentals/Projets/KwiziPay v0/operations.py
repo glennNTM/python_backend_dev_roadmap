@@ -1,13 +1,19 @@
 from config import setup_logging, DATA_FILE
-from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError
+from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError, SoldeInsuffisantError
 
 import json, logging
 
 
 logger = logging.getLogger(__name__)  
 
-def deposer():
-    print("Vous voulez faire un depot")
+def deposer(comptes: dict, nom: str, montant: float):
+     if not nom in comptes:
+            raise CompteInexistantError("Ce compte n'existe pas.")
+     elif montant <= 0:
+         raise MontantInvalideError("Le montant doit etre superieure a 0.")
+     else:
+         comptes[nom] += montant
+         logger.info(f"Depot sur le compte {nom} effectue avec succes!")
 
 def consulter_solde(comptes: dict, nom: str):
     if not nom in comptes:
@@ -17,9 +23,17 @@ def consulter_solde(comptes: dict, nom: str):
         return comptes[nom]
 
 
-def retirer():
-    print("Vous voulez faire un retrait")
-
+def retirer(comptes: dict, nom: str, montant: float, ):
+    if not nom in comptes:
+        raise CompteInexistantError("Ce compte n'existe pas.")
+    elif montant <= 0:
+        raise MontantInvalideError("Le montant doit etre superieure a 0.")
+    elif comptes[nom] < montant:
+        raise SoldeInsuffisantError(f"Le solde {comptes[nom]} est insuffisant pour effectuer cette operation.")
+    else:
+        comptes[nom] -= montant
+        logger.info(f"Retrait sur le compte {nom} effectue avec succes!")
+   
 
 def transferer():
     print("Vous voulez faire un transfert")
