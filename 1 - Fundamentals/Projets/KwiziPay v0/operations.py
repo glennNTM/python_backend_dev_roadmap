@@ -1,5 +1,5 @@
 from config import setup_logging, DATA_FILE
-from exceptions import CompteInexistantError
+from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError
 
 import json, logging
 
@@ -28,7 +28,14 @@ def historique():
     print("Vous voulez consulter votre historique")
 
 def creer_un_compte(comptes: dict, nom: str, solde: float):
-    pass
+    if nom in comptes:
+        raise CompteDejaExistantError("Un compte avec ce non existe deja.")
+    elif solde < 0:
+        raise MontantInvalideError("Le solde doit etre superieure ou egale a 0.")
+    else:
+        comptes[nom] = solde
+        logger.info("Compte cree avec succes!")
+
 
 
 def charger_les_donnees() -> dict:

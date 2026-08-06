@@ -4,8 +4,13 @@ class KwiziPayError(Exception):
 class CompteInexistantError(KwiziPayError):
     """"Compte inexistant"""
 
+class CompteDejaExistantError(KwiziPayError):
+    """""Un compte avec ce nom existe deja"""
+    
+
 class SoldeInsuffisantError(KwiziPayError):
-    pass
+        """""Solde insuffisant"""
+
 
 class MontantInvalideError(KwiziPayError):
-    pass
+       """""Montant invalide"""
