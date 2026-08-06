@@ -14,3 +14,6 @@ class SoldeInsuffisantError(KwiziPayError):
 
 class MontantInvalideError(KwiziPayError):
        """""Montant invalide"""
+
+class OperationInvalideError(KwiziPayError):
+       """""Operation est invalide. Elle ne peut pas etre effectuer"""

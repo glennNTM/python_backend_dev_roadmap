@@ -1,5 +1,5 @@
 from config import setup_logging, DATA_FILE
-from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError, SoldeInsuffisantError
+from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError, SoldeInsuffisantError, OperationInvalideError
 
 import json, logging
 
@@ -35,8 +35,24 @@ def retirer(comptes: dict, nom: str, montant: float, ):
         logger.info(f"Retrait sur le compte {nom} effectue avec succes!")
    
 
-def transferer():
-    print("Vous voulez faire un transfert")
+def transferer(comptes: dict, compte_source: str, compte_destination: str, montant: float):
+    if not compte_source in comptes:
+        raise CompteInexistantError("Ce compte n'existe pas.")
+    elif not compte_destination in comptes:
+        raise CompteInexistantError("Ce compte n'existe pas.")
+    elif compte_source == compte_destination:
+        raise OperationInvalideError("Le transfere d'un compte vers lui-meme n'est pas possible. Cette operation ne peut pas etre efectuer.")
+    elif montant <= 0:
+        raise MontantInvalideError(f"Le montant {montant} est invalide. Le transfert ne peut pas etre effectue.")
+    elif comptes[compte_source] < montant:
+        raise SoldeInsuffisantError(f"Solde insufisant pour effectuer ce transfert. Solde : {comptes[compte_source]}")
+    else:
+        comptes[compte_source] -= montant
+        comptes[compte_destination] += montant
+
+        logger.info(f"Transfert effectue avec succes!")
+
+
 
 def historique():
     print("Vous voulez consulter votre historique")
@@ -49,7 +65,6 @@ def creer_un_compte(comptes: dict, nom: str, solde: float):
     else:
         comptes[nom] = solde
         logger.info("Compte cree avec succes!")
-
 
 
 def charger_les_donnees() -> dict:
