@@ -1,6 +1,7 @@
 from config import setup_logging, DATA_FILE
 from exceptions import CompteInexistantError, CompteDejaExistantError, MontantInvalideError, SoldeInsuffisantError, OperationInvalideError
 
+from datetime import datetime
 import json, logging
 
 
@@ -22,7 +23,6 @@ def consulter_solde(comptes: dict, nom: str):
     else:
         return comptes[nom]
 
-
 def retirer(comptes: dict, nom: str, montant: float, ):
     if not nom in comptes:
         raise CompteInexistantError("Ce compte n'existe pas.")
@@ -33,7 +33,6 @@ def retirer(comptes: dict, nom: str, montant: float, ):
     else:
         comptes[nom] -= montant
         logger.info(f"Retrait sur le compte {nom} effectue avec succes!")
-   
 
 def transferer(comptes: dict, compte_source: str, compte_destination: str, montant: float):
     if not compte_source in comptes:
@@ -52,10 +51,16 @@ def transferer(comptes: dict, compte_source: str, compte_destination: str, monta
 
         logger.info(f"Transfert effectue avec succes!")
 
+def historique(historique: list, compte = None) -> list:
+      
+    return historique
 
-
-def historique():
-    print("Vous voulez consulter votre historique")
+def enregistrer_transaction(historique: list, operation: str, montant: float, compte_1: str, compte_2: str = None): 
+    """ Construire et stocker une entree """
+    transaction_date = datetime.now().isoformat()
+    transaction = (operation, compte_1, compte_2, montant, transaction_date)
+    historique.append(transaction)
+    
 
 def creer_un_compte(comptes: dict, nom: str, solde: float):
     if nom in comptes:
@@ -65,7 +70,6 @@ def creer_un_compte(comptes: dict, nom: str, solde: float):
     else:
         comptes[nom] = solde
         logger.info("Compte cree avec succes!")
-
 
 def charger_les_donnees() -> dict:
     try:
