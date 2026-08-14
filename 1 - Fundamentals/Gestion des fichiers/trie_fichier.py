@@ -21,14 +21,13 @@ dirs = {
     ".wav" : "Audio",
     ".mov" : "Video",
     ".mp4" : "Video",
-    ".zip" : "Archives",
     ".rar" : "Archives",
     ".zip" : "Archives",
     ".exe" : "Programmes",
     ".apk" : "Programmes"
  }
 
-dir_a_trier = Path.home() / "Documents"
+dir_a_trier = Path.home() / "Downloads"
 
 files = [f for f in dir_a_trier.iterdir() if f.is_file()]
 
