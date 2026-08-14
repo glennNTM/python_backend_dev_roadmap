@@ -7,7 +7,7 @@ import json, logging
 
 logger = logging.getLogger(__name__)  
 
-def deposer(comptes: dict, nom: str, montant: float):
+def deposer(comptes: dict, nom: str, montant: float, historique: list):
      if not nom in comptes:
             raise CompteInexistantError("Ce compte n'existe pas.")
      elif montant <= 0:
@@ -15,6 +15,7 @@ def deposer(comptes: dict, nom: str, montant: float):
      else:
          comptes[nom] += montant
          logger.info(f"Depot sur le compte {nom} effectue avec succes!")
+         enregistrer_transaction()
 
 def consulter_solde(comptes: dict, nom: str):
     if not nom in comptes:
@@ -51,9 +52,14 @@ def transferer(comptes: dict, compte_source: str, compte_destination: str, monta
 
         logger.info(f"Transfert effectue avec succes!")
 
-def historique(historique: list, compte = None) -> list:
-      
-    return historique
+def historique(historique: list, compte: str = None) -> list:
+    if compte:
+        historique_filtre = [t for t in historique if compte == t[1] or compte == t[2]]
+    else:
+        historique_filtre = historique.copy()
+    
+    res = sorted(historique_filtre, key=lambda x: x[4], reverse=True)
+    return res
 
 def enregistrer_transaction(historique: list, operation: str, montant: float, compte_1: str, compte_2: str = None): 
     """ Construire et stocker une entree """
