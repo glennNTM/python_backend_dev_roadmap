@@ -22,7 +22,14 @@ while True:
         if choix in ['1', '2', '3', '4', '5', '6', '7']:
             match choix:
                 case '1':
-                    creer_un_compte()
+                    compte_nom = input("Entrez le nom du compte que vous-voulez creer: ")
+                    if not compte_nom:
+                        print("Vous n'avez pas entrer de nom, loperation va etre annuler.")
+                        break
+                    else:
+                        solde_initial = float(input("Entrez votre solde initial: "))
+
+                    creer_un_compte(comptes, compte_nom, solde_initial)
                 case '2':
                     consulter_solde()
                 case '3':
@@ -35,7 +42,7 @@ while True:
                     charger_historique()
                 case '7':
                     sauvegarder(comptes, historique)
-                    print("Bye")
+                    print("Sauvegarde faite.")
                     break
     except KeyboardInterrupt:
         sauvegarder(comptes, historique)
