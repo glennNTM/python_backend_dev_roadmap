@@ -1,4 +1,4 @@
-from operations import deposer, retirer, transferer, historique, creer_un_compte, consulter_solde
+from operations import deposer, retirer, transferer, charger_historique, creer_un_compte, consulter_solde, charger_les_donnees, sauvegarder
 
 menu = """
 
@@ -12,7 +12,9 @@ menu = """
 
     """
 
+comptes, historique = charger_les_donnees()
 print("Bienvenue dans KwiziPay, vote gestionnaire de portefeuille Mobile Money (CLI). Quelle operation voulez-vous faire? : ")
+
 
 while True:
     try:
@@ -30,9 +32,11 @@ while True:
                 case '5':
                     transferer()
                 case '6':
-                    historique()
+                    charger_historique()
                 case '7':
+                    sauvegarder(comptes, historique)
                     print("Bye")
                     break
     except KeyboardInterrupt:
+        sauvegarder(comptes, historique)
         break

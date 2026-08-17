@@ -54,7 +54,7 @@ def transferer(comptes: dict, compte_source: str, compte_destination: str, monta
         logger.info(f"Transfert effectue avec succes!")
         enregistrer_transaction(historique=historique, operation="transfert", montant=montant, compte_1=compte_source, compte_2=compte_destination)
 
-def historique(historique: list, compte: str = None) -> list:
+def charger_historique(historique: list, compte: str = None) -> list:
     if compte:
         historique_filtre = [t for t in historique if compte == t[1] or compte == t[2]]
     else:
@@ -95,4 +95,3 @@ def sauvegarder(comptes: dict, historique: list):
     data = {"comptes": comptes, "historique": historique}
     with open(DATA_FILE, "w", encoding='utf-8') as f:
         json.dump(data, f, indent=2)
-   
