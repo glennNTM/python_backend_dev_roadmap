@@ -36,7 +36,6 @@ def retirer(comptes: dict, nom: str, montant: float, historique: list):
         logger.info(f"Retrait sur le compte {nom} effectue avec succes!")
         enregistrer_transaction(historique=historique, operation="retrait", montant=montant, compte_1=nom)
 
-
 def transferer(comptes: dict, compte_source: str, compte_destination: str, montant: float, historique: list):
     if not compte_source in comptes:
         raise CompteInexistantError("Ce compte n'existe pas.")
@@ -55,8 +54,6 @@ def transferer(comptes: dict, compte_source: str, compte_destination: str, monta
         logger.info(f"Transfert effectue avec succes!")
         enregistrer_transaction(historique=historique, operation="transfert", montant=montant, compte_1=compte_source, compte_2=compte_destination)
 
-    
-
 def historique(historique: list, compte: str = None) -> list:
     if compte:
         historique_filtre = [t for t in historique if compte == t[1] or compte == t[2]]
@@ -72,7 +69,6 @@ def enregistrer_transaction(historique: list, operation: str, montant: float, co
     transaction = (operation, compte_1, compte_2, montant, transaction_date)
     historique.append(transaction)
     
-
 def creer_un_compte(comptes: dict, nom: str, solde: float):
     if nom in comptes:
         raise CompteDejaExistantError("Un compte avec ce non existe deja.")
@@ -82,18 +78,21 @@ def creer_un_compte(comptes: dict, nom: str, solde: float):
         comptes[nom] = solde
         logger.info("Compte cree avec succes!")
 
-def charger_les_donnees() -> dict:
+def charger_les_donnees() -> tuple[dict, list]:
     try:
         with open(DATA_FILE, "r", encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+            comptes = data["comptes"]
+            historique = data["historique"]
+            return (comptes, historique)
     except FileNotFoundError:
-        return {}
+        return ({}, [])
     except json.JSONDecodeError:
         logger.error("Fichier JSON corrompu")
-        return {}
+        return ({}, [])
 
-
-def sauvegarder(comptes: dict):
+def sauvegarder(comptes: dict, historique: list):
+    data = {"comptes": comptes, "historique": historique}
     with open(DATA_FILE, "w", encoding='utf-8') as f:
-        json.dump(comptes, f, indent=2)
+        json.dump(data, f, indent=2)
    
