@@ -15,7 +15,7 @@ def deposer(comptes: dict, nom: str, montant: float, historique: list):
      else:
          comptes[nom] += montant
          logger.info(f"Depot sur le compte {nom} effectue avec succes!")
-         enregistrer_transaction()
+         enregistrer_transaction(historique=historique, operation="depot", montant=montant, compte_1=nom)
 
 def consulter_solde(comptes: dict, nom: str):
     if not nom in comptes:
@@ -24,7 +24,7 @@ def consulter_solde(comptes: dict, nom: str):
     else:
         return comptes[nom]
 
-def retirer(comptes: dict, nom: str, montant: float, ):
+def retirer(comptes: dict, nom: str, montant: float, historique: list):
     if not nom in comptes:
         raise CompteInexistantError("Ce compte n'existe pas.")
     elif montant <= 0:
@@ -34,8 +34,10 @@ def retirer(comptes: dict, nom: str, montant: float, ):
     else:
         comptes[nom] -= montant
         logger.info(f"Retrait sur le compte {nom} effectue avec succes!")
+        enregistrer_transaction(historique=historique, operation="retrait", montant=montant, compte_1=nom)
 
-def transferer(comptes: dict, compte_source: str, compte_destination: str, montant: float):
+
+def transferer(comptes: dict, compte_source: str, compte_destination: str, montant: float, historique: list):
     if not compte_source in comptes:
         raise CompteInexistantError("Ce compte n'existe pas.")
     elif not compte_destination in comptes:
@@ -51,6 +53,9 @@ def transferer(comptes: dict, compte_source: str, compte_destination: str, monta
         comptes[compte_destination] += montant
 
         logger.info(f"Transfert effectue avec succes!")
+        enregistrer_transaction(historique=historique, operation="transfert", montant=montant, compte_1=compte_source, compte_2=compte_destination)
+
+    
 
 def historique(historique: list, compte: str = None) -> list:
     if compte:
