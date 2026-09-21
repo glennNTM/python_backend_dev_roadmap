@@ -1,4 +1,6 @@
 from operations import deposer, retirer, transferer, charger_historique, creer_un_compte, consulter_solde, charger_les_donnees, sauvegarder
+from exception import MontantInvalideError, CompteDejaExistantError
+
 
 menu = """
 
@@ -25,11 +27,17 @@ while True:
                     compte_nom = input("Entrez le nom du compte que vous-voulez creer: ")
                     if not compte_nom:
                         print("Vous n'avez pas entrer de nom, loperation va etre annuler.")
-                        break
+                        continue
                     else:
                         solde_initial = float(input("Entrez votre solde initial: "))
+                        if not solde_initial:
+                            raise MontantInvalideError("Le ontant du solde initial est invalide. Entrez une valeur correcte.")
+                        continue
+                    try:
+                        creer_un_compte(comptes, compte_nom, solde_initial)
+                    except CompteDejaExistantError:
+                        print("Ce compte exsite deja.")
 
-                    creer_un_compte(comptes, compte_nom, solde_initial)
                 case '2':
                     consulter_solde()
                 case '3':

@@ -17,9 +17,9 @@ def deposer(comptes: dict, nom: str, montant: float, historique: list):
          logger.info(f"Depot sur le compte {nom} effectue avec succes!")
          enregistrer_transaction(historique=historique, operation="depot", montant=montant, compte_1=nom)
 
-def consulter_solde(comptes: dict, nom: str):
+def consulter_solde(comptes: dict, nom: str) -> float:
     if not nom in comptes:
-    # On verifie si le comte est bien existant
+    # On verifie si le compte est bien existant
         raise CompteInexistantError("Ce compte n'existe pas.")
     else:
         return comptes[nom]
@@ -71,7 +71,7 @@ def enregistrer_transaction(historique: list, operation: str, montant: float, co
     
 def creer_un_compte(comptes: dict, nom: str, solde: float):
     if nom in comptes:
-        raise CompteDejaExistantError("Un compte avec ce non existe deja.")
+        raise CompteDejaExistantError("Un compte avec ce nom existe deja.")
     elif solde < 0:
         raise MontantInvalideError("Le solde doit etre superieure ou egale a 0.")
     else:
