@@ -1,5 +1,8 @@
+import json
+
 from operations import deposer, retirer, transferer, charger_historique, creer_un_compte, consulter_solde, charger_les_donnees, sauvegarder
-from exception import MontantInvalideError, CompteDejaExistantError
+from config import DATA_FILE
+
 
 
 menu = """
@@ -27,19 +30,26 @@ while True:
                     compte_nom = input("Entrez le nom du compte que vous-voulez creer: ")
                     if not compte_nom:
                         print("Vous n'avez pas entrer de nom, loperation va etre annuler.")
-                        continue
+                        break
                     else:
                         solde_initial = float(input("Entrez votre solde initial: "))
-                        if not solde_initial:
-                            raise MontantInvalideError("Le ontant du solde initial est invalide. Entrez une valeur correcte.")
-                        continue
-                    try:
-                        creer_un_compte(comptes, compte_nom, solde_initial)
-                    except CompteDejaExistantError:
-                        print("Ce compte exsite deja.")
 
+                        with open(DATA_FILE, "a", encoding='utf-8') as f:
+                            json.dump((compte_nom, solde_initial), f, indent=4)
+
+                        print(f"Le compte {compte_nom} a ete cree avec un solde {solde_initial}")
+
+                    creer_un_compte(comptes, compte_nom, solde_initial)
                 case '2':
-                    consulter_solde()
+                    compte_a_consulter = input("Entrez le nom du compte que vous souhaitez consulter: ")
+                    if not compte_a_consulter:
+                        print("Vous n'avez pas entrer de nom, l'operation va etre annuler.")
+                        continue
+                    elif compte_a_consulter not in comptes:
+                        print("Ce compte n'existe pas.")
+                    else:
+                        solde = consulter_solde(comptes, compte_a_consulter)
+                        print(f"Le solde du compte {compte_a_consulter} est de {solde} XAF")
                 case '3':
                     deposer()
                 case '4':
