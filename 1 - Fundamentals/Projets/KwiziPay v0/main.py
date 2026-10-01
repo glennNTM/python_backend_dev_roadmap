@@ -1,6 +1,6 @@
 from operations import deposer, retirer, transferer, charger_historique, creer_un_compte, consulter_solde, charger_les_donnees, sauvegarder
-from exceptions import CompteInexistantError, MontantInvalideError, SoldeInsuffisantError, OperationInvalideError
-
+from exceptions import CompteInexistantError, MontantInvalideError, SoldeInsuffisantError, OperationInvalideError, CompteDejaExistantError
+from config import setup_logging
 
 
 menu = """
@@ -14,6 +14,8 @@ menu = """
     [7]: Quitter.
 
     """
+
+setup_logging()
 
 comptes, historique = charger_les_donnees()
 print("Bienvenue dans KwiziPay, vote gestionnaire de portefeuille Mobile Money (CLI). Quelle operation voulez-vous faire? : ")
@@ -35,11 +37,13 @@ while True:
                         solde_initial = float(input("Entrez votre solde initial: "))
 
                         creer_un_compte(comptes, compte_nom, solde_initial)
-                        print(f"Le compte {compte_nom} a ete cree avec un solde {solde_initial}")
+                        print(f"Le compte {compte_nom} a ete cree avec un solde {solde_initial} XAF")
                         sauvegarder(comptes, historique)
 
                     except CompteInexistantError as e:
                         print(e)
+                    except CompteDejaExistantError as e:
+                            print(e)
                     except MontantInvalideError as e:
                         print(e)
                     except ValueError as e:
@@ -64,6 +68,8 @@ while True:
                         montant_du_depot = float(input("Combien souhaitez-vous deposer? : "))
                         deposer(comptes, compte_recepteur, montant_du_depot, historique)
                         sauvegarder(comptes, historique)
+
+                        print(f"Le depot de {montant_du_depot} sur le compte {compte_recepteur} a ete effectue avec succes.")
 
                     except CompteInexistantError as e:
                         print(e)
@@ -93,9 +99,10 @@ while True:
                     try:
                         donneur = input("Depuis quel compte souhaitez-vous envoyer de l'argent? : ")
                         recepteur = input("Vers quel compte souhaitez-vous envoyer de l'argent? : ")
-                        montant_du_virement = float(input("Combien souhaitez-vous envoyer? :"))
+                        montant_du_virement = float(input("Combien souhaitez-vous envoyer? : "))
                         transferer(comptes, donneur, recepteur, montant_du_virement, historique)
                         sauvegarder(comptes, historique)
+                        print(f"Le virement de {montant_du_virement} du compte {donneur} vers le compte {recepteur} a ete effectue avec succes.")
                     except CompteInexistantError as e:
                         print(e)
                     except MontantInvalideError as e:
@@ -111,7 +118,11 @@ while True:
                     historique_de_compte = input("L'historique de quel compte voulez-vous consulter? (Laisser vide pour consulter l'historique de tous les comptes) : ")
                     t = charger_historique(historique, historique_de_compte)
                     if t:
-                        print(t)
+                        for operation, compte_1, compte_2, montant, date in t:
+                            if compte_2:
+                                print(f"Transfert de {compte_1} a {compte_2}: {montant} XAF le {date}\n")
+                            else:
+                                print(f"{operation} sur {compte_1}: {montant} XAF le {date}\n")
                     else:
                         print("Aucune transaction.")
                 
