@@ -106,7 +106,7 @@ def main():
                                 print(f"Le virement de {montant_du_virement} du compte {donneur} vers le compte {recepteur} a ete effectue avec succes.")
                             except KwiziPayError as e:
                                 print(e)
-                                logger.warning
+                                logger.warning(e)
                             except ValueError as e:
                                 print(e)
                                 logger.error(e)

@@ -81,7 +81,7 @@ def creer_un_compte(comptes: dict, nom: str, solde: float):
         logger.error("Erreur lors de la creation du compte.")
         raise CompteDejaExistantError("Un compte avec ce nom existe deja.")
     elif solde < 0:
-        logger.error("Erreur lors de la creation du compte.")
+        logger.warning("Erreur lors de la creation du compte.")
         raise MontantInvalideError("Le solde doit etre superieure ou egale a 0.")
     else:
         comptes[nom] = solde
