@@ -44,5 +44,4 @@ print(acc_glenn)
 acc = [acc_glenn, acc_1, acc_2]
 
 print(acc)
-
 print(acc_1 == acc_2)

@@ -16,6 +16,15 @@ class Bibliotheque:
     def ajouter(self, new_livre: Livre, ):
         self.livres.append(new_livre)
 
+    def __len__(self):
+        return len(self.livres)
+    
+    def __contains__(self, titre):
+        for livre in self.livres:
+            if livre.titre == titre: return True
+        return False
+    
+
     def emprunter(self, titre: str):
         for livre in self.livres:
             if titre == livre.titre:
@@ -36,3 +45,5 @@ mediatheque.ajouter(fav_livre)
 mediatheque.emprunter("L'Etranger")
 
 print(fav_livre)
+print(len(mediatheque))
+print("L'Etranger" in mediatheque)
