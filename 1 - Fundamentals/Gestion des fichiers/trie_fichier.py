@@ -34,5 +34,5 @@ files = [f for f in dir_a_trier.iterdir() if f.is_file()]
 for f in files:
     output_dir = dir_a_trier / dirs.get(f.suffix,"Autres")
     output_dir.mkdir(exist_ok=True)
-    f.rename(output_dir / f.name)
+    f.replace(output_dir / f.name)
 
