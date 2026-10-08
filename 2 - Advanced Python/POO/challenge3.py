@@ -5,7 +5,10 @@ class Livre:
         self.disponible = disponible
 
     def __str__(self):
-        return f"{self.titre} de {self.auteur}"
+        if self.disponible:
+            return f"{self.titre} de {self.auteur} est disponible"
+        return f"{self.titre} de {self.auteur} est emprunte"
+        
 
 class Bibliotheque:
     def __init__(self):
@@ -28,5 +31,8 @@ class Bibliotheque:
 
 print(Livre)
 fav_livre = Livre("L'Etranger", "Albert Camus")
+mediatheque = Bibliotheque()
+mediatheque.ajouter(fav_livre)
+mediatheque.emprunter("L'Etranger")
 
 print(fav_livre)
