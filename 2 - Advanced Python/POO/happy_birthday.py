@@ -8,7 +8,6 @@ Joyeux anniversaire."""
 
     @staticmethod
     def chante_pour(prenom):
-        return Chanson.paroles
-
+        return Chanson.paroles.format(prenom=prenom)
 
 print(Chanson.chante_pour(prenom="Paul"))
