@@ -1,47 +1,51 @@
 class CompteBancaire:
     def __init__(self, nom: str, solde: int):
-        self.nom = nom
-        self.solde = solde
+        self._nom = nom
+        if solde < 0:
+            raise ValueError("Le montant doit etre positif.")
+        self._solde = solde
 
     def __str__(self):
-        return f"Compte de {self.nom}: {self.solde} XAF."
+        return f"Compte de {self._nom}: {self._solde} XAF."
 
     def __repr__(self):
-        return f"CompteBancaire('{self.nom}', {self.solde})"
+        return f"CompteBancaire('{self._nom}', {self._solde})"
 
     def __eq__(self, other):
-        return self.nom == other.nom
+        return self._nom == other._nom
 
+    @property
+    def nom(self):
+        return self._nom
+
+    @property
+    def solde(self):
+            return self._solde
 
     def deposer(self, montant: int):
         if montant <= 0:
             raise ValueError("Le montant doit etre positif.")
         
-        self.solde += montant
-        return self.solde
-        
+        self._solde += montant
+        return self._solde
+
+
     def retirer(self, montant: int):
         if montant <= 0:
             raise ValueError("Le solde est insuffisant pour effectuer cette transaction.")
-        elif montant > self.solde:
+        elif montant > self._solde:
             raise ValueError("Le solde est insuffisant pour retirer ce montant.")
         
-        self.solde -= montant
-        return self.solde
+        self._solde -= montant
+        return self._solde
     
     def afficher_solde(self):
         return self.solde
 
-acc_glenn = CompteBancaire("Glenn", 50000000)
-acc_1 = CompteBancaire("Mike", 50000)
-acc_2 = CompteBancaire("Mike", 60000)
+valid_account = CompteBancaire("Glenn", 100)
+print(valid_account.solde, valid_account._nom)
+valid_account.solde = 100000
+valid_account.nom = "Autre"
 
-print(acc_glenn.retirer(100000))
-print(acc_glenn.deposer(1))
-print(acc_glenn.afficher_solde())
-print(acc_glenn)
+valid_account = CompteBancaire("Baba", -100)
 
-acc = [acc_glenn, acc_1, acc_2]
-
-print(acc)
-print(acc_1 == acc_2)

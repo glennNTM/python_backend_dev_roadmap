@@ -25,4 +25,3 @@ print(str(temp_1.celsius) +"°C")
 
 temp_2.celsius = 0
 temp_1.celsius = -500
-
