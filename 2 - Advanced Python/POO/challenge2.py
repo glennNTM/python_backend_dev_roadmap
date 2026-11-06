@@ -42,10 +42,27 @@ class CompteBancaire:
     def afficher_solde(self):
         return self.solde
 
+class CompteEpargne(CompteBancaire):
+    def __init__(self, nom: str, solde: int, taux: float):
+        super().__init__(nom, solde)
+        self.taux = taux
+
+    def appliquer_interets(self):
+        # 1. Calcul du montant des interets
+        if self.taux:
+            return self._solde * self.taux
+
+    def ajouter_interet(self, montant):
+            montant = self.appliquer_interets
+            if montant <= 0:
+                raise ValueError("Le montant doit etre positif.")
+            
+            self._solde += montant
+            return self._solde
+
 valid_account = CompteBancaire("Glenn", 100)
 print(valid_account.solde, valid_account._nom)
 valid_account.solde = 100000
 valid_account.nom = "Autre"
 
 valid_account = CompteBancaire("Baba", -100)
-

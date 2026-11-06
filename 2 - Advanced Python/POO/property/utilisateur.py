@@ -17,7 +17,7 @@ class Utilisateur():
                   
     @email.setter
     def email(self, new_email: str) -> None:
-        if type(new_email) != str:
+        if not isinstance(new_email, str):
             raise TypeError("L'email doit etre une chaine de caratere")
         email = Utilisateur.email_normaliser(new_email)
         if not email:
@@ -39,3 +39,8 @@ class Utilisateur():
     @property
     def mot_de_passe(self):
         return self._mot_de_passe
+
+    @mot_de_passe.setter
+    def mot_de_passe(self, new_mdp):
+        if not isinstance(new_mdp, str):
+                    raise TypeError("Le mot de passe est invalide.")
