@@ -47,22 +47,32 @@ class CompteEpargne(CompteBancaire):
         super().__init__(nom, solde)
         self.taux = taux
 
+    def retirer(self, montant: int):
+        minimum_solde = 5000
+        solde_simule = self._solde - montant
+        if solde_simule < minimum_solde:
+            raise ValueError("Le solde de votre compte epargne ne peut aler sous 5000. Vous n'eavez pas assez de sous.")
+        return super().retirer(montant)
+
     def appliquer_interets(self):
         # 1. Calcul du montant des interets
-        if self.taux:
-            return self._solde * self.taux
+        montant = self._solde * self.taux
+        self.deposer(montant)
 
-    def ajouter_interet(self, montant):
-            montant = self.appliquer_interets
-            if montant <= 0:
-                raise ValueError("Le montant doit etre positif.")
-            
-            self._solde += montant
-            return self._solde
+        return self._solde
+    
 
 valid_account = CompteBancaire("Glenn", 100)
 print(valid_account.solde, valid_account._nom)
-valid_account.solde = 100000
-valid_account.nom = "Autre"
 
-valid_account = CompteBancaire("Baba", -100)
+valid_account = CompteBancaire("Baba", 10000)
+me = CompteEpargne("Glenn", 100000, 0.03)
+me.appliquer_interets()
+print(me.solde)
+
+me.retirer(10000)
+me.retirer(5000)
+me.retirer(500000)
+
+print(me.solde)
+
