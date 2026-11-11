@@ -1,34 +1,43 @@
-class Animal():
+from abc import ABC, abstractmethod
+
+
+class Animal(ABC):
     def __init__(self, nom: str):
-        self.nom = nom
-
+            self.nom = nom
+    @abstractmethod
     def crier(self):
-        return "Woooooo!"
-
+        pass
 class Chien(Animal):
+   
     def crier(self):
         return "Ouaf"
 
 class Chat(Animal):
+   
     def crier(self):
         return "Miaou"
 
 class Mouton(Animal):
+   
     def crier(self):
         return "Beeee"
 
 class Poisson(Animal):
-    pass
+   
+    def crier(self):
+            return "Popo"
 
 
-serpent = Animal("Serpent")
+# s = Animal("Serpent")
+
+
 chien = Chien("Oscar")
 chat = Chat("Garfield")
 mouton = Mouton("Moumou")
 poisson = Poisson("Nemo")
 
 
-animaux = [serpent, chat, chien, mouton, poisson]
+animaux = [ chat, chien, mouton, poisson]
 
 for animal in animaux:
     print(animal.crier())
