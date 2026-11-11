@@ -9,9 +9,26 @@ class Chien(Animal):
     def crier(self):
         return "Ouaf"
 
+class Chat(Animal):
+    def crier(self):
+        return "Miaou"
+
+class Mouton(Animal):
+    def crier(self):
+        return "Beeee"
+
+class Poisson(Animal):
+    pass
+
 
 serpent = Animal("Serpent")
-print(serpent.crier())
+chien = Chien("Oscar")
+chat = Chat("Garfield")
+mouton = Mouton("Moumou")
+poisson = Poisson("Nemo")
 
-chien1 = Chien("Oscar")
-print(chien1.crier())
+
+animaux = [serpent, chat, chien, mouton, poisson]
+
+for animal in animaux:
+    print(animal.crier())
