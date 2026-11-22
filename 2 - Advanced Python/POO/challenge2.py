@@ -32,7 +32,7 @@ class CompteBancaire:
 
     def retirer(self, montant: int):
         if montant <= 0:
-            raise ValueError("Le solde est insuffisant pour effectuer cette transaction.")
+            raise ValueError("Le montant doit etre positif.")
         elif montant > self._solde:
             raise ValueError("Le solde est insuffisant pour retirer ce montant.")
         

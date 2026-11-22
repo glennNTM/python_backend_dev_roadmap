@@ -11,7 +11,7 @@ def deposer(comptes: dict, nom: str, montant: float, historique: list):
             logger.warning(f"Tentative de depot a echoue. Le compte {nom} n'existe pas")
             raise CompteInexistantError("Ce compte n'existe pas.")
      elif montant <= 0:
-         raise MontantInvalideError("Le montant doit etre superieure a 0.")
+         raise MontantInvalideError("Le montant doit etre superieur a 0.")
      else:
          comptes[nom] += montant
          logger.info(f"Depot sur le compte {nom} effectue avec succes!")
